@@ -1,0 +1,50 @@
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <br/>
+      <h3 class="panel-title">Search Movie</h3>
+        <select id="category" formControlName="mcategory" class="form-control" required style="height:40px">
+        <option value="">Select Genre</option>
+        <option value="Drama">Drama</option>
+        <option value="Fiction">Fiction</option>
+        <option value="Satire">Satire</option>
+      </select>
+      
+      {{mcategoryrequired}}
+      <br/>
+    </div>
+
+    <div class="panel-body">
+      <span class="nameV">
+      <label *ngIf="searchForm.controls['mcategory'].touched && searchForm.controls['mcategory'].value===''">
+        Select Genre!!!<br>
+      </label>
+    </span>
+
+    </div>
+    <div class="panel-footer" class="form-group">
+      <div class="container">
+         <button type="submit" class="btn btn-primary " [disabled]="searchForm.invalid">Search Movie</button>
+      </div>
+     
+    </div>
+  </div>
+</form>
+
+<table border="2" *ngIf="temp && searchForm.valid">
+  <thead>
+    <th>Movie Name</th>
+    <th>Rating</th>
+  </thead>
+  <tbody>
+    <tr>
+    <th><input type="text" placeholder="Movie Name" [(ngModel)]='nameFilter'></th>
+    <th><input type="text" placeholder="Rating" [(ngModel)]='ratingFilter'></th>
+  </tr>
+  <tr *ngFor="let movie of shows | search:nameFilter |rating:ratingFilter">
+    <td>{{movie.mname}}</td>
+    <td>{{movie.mrating}}</td>
+  </tr>
+  </tbody>
+</table>
+
